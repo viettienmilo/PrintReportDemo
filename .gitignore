@@ -1,0 +1,54 @@
+# Qt build directories
+build*/
+*.obj
+*.o
+*.lo
+*.la
+*.al
+*.libs
+*.so
+*.dll
+*.dylib
+*.exe
+*.app
+*.a
+*.lib
+*.exp
+*.pdb
+*.idb
+*.ilk
+
+# Qt Creator user-specific files
+*.user
+*.user.*
+
+# Temporary files
+*.autosave
+*.pro.user
+*.qmlproject.user
+*.qmlproject.user.*
+*.qmlc
+*.jsc
+*.qmlcache
+
+# CMake build directories
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.ninja
+*.ninja_deps
+*.ninja_log
+
+# Generated files
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+*.qm
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
