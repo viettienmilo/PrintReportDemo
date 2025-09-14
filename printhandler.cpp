@@ -5,21 +5,20 @@
 PrintHandler::PrintHandler(QObject *parent)
     : QObject{parent}
 {
-    printer = new QPrinter(QPrinter::ScreenResolution);
-    // printer->setResolution(600);
+    printer = new QPrinter(QPrinter::PrinterResolution);
+    // printer->setResolution(72);
     printer->setPageSize(QPageSize::A4);
     printer->setPageOrientation(QPageLayout::Portrait);
-    printer->setPageMargins(QMarginsF(2.5, 2., 2., 2.), QPageLayout::Millimeter);
-    printer->setFullPage(true);
-    // printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout::Inch);
+    // printer->setFullPage(true);
     // printer->setOutputFileName("test.pdf");
+    // qDebug() << printer->resolution();
 }
 
 void PrintHandler::print(int _orderId)
 {
     QPrintDialog* dialog = new QPrintDialog(printer);
     if(dialog->exec() == QDialog::Accepted){
-        // printer = dialog->printer();
         this->printRequest(_orderId);
     }
 }
@@ -80,11 +79,6 @@ void PrintHandler::printRequest(int _orderId)
     cursor->insertText(freight, italicFormat);
     cursor->insertText("(g)", italicFormat);
     cursor->insertBlock();
-    QTextFrameFormat line;
-    line.setHeight(10);
-    line.setWidth(2350);
-    line.setBackground(Qt::black);
-    cursor->insertFrame(line);
 
     // QTextFrameFormat frameFormat;
     // frameFormat.setMargin(0);
@@ -102,16 +96,21 @@ void PrintHandler::printRequest(int _orderId)
     // cursor->insertBlock(); // new paragraph after the line
     // cursor->insertText("Outside");
 
+    QTextFrameFormat line;
+    line.setHeight(3);
+    line.setWidth(QTextLength(QTextLength::PercentageLength, 100));
+    line.setBackground(Qt::black);
+    cursor->insertFrame(line);
+    // Move cursor out of the frame
+    cursor->movePosition(QTextCursor::NextBlock);
+    cursor->insertBlock();
+
     /*
      print out Order Detail table
     */
-    cursor->insertBlock(defaultBlockFormat);
-    cursor->insertBlock(defaultBlockFormat);
-
     orderDetailModel.fetchData(_orderId);
-
     // table header texts
-    QList<QString> headers = {"No", "Product Name", "Unit Price ($)", "Quantity", "Discount (%)", "Total Price ($)"};
+    QList<QString> headers = {"No.", "Product Name", "Unit Price ($)", "Quantity", "Discount (%)", "Total Price ($)"};
     // table column widths
     QList<QTextLength> column_widths;
     column_widths.append(QTextLength(QTextLength::FixedLength, 40));  // takes remaining space proportionally
@@ -129,6 +128,7 @@ void PrintHandler::printRequest(int _orderId)
     tbformat->setHeaderRowCount(1);
     tbformat->setColumnWidthConstraints(column_widths);
     tbformat->setHeaderRowCount(1);
+    tbformat->setWidth(QTextLength(QTextLength::PercentageLength, 100)); // full page width
 
     // table number of rows and columns
     int tableRow = orderDetailModel.rowCount() + 1;    // +1 for table header
@@ -137,32 +137,36 @@ void PrintHandler::printRequest(int _orderId)
     // insert table to document
     QTextTable* table = cursor->insertTable(tableRow, tableCol, *tbformat);
 
-
-
     // print table header
     for(auto col=0; col<table->columns(); col++){
         QTextTableCell headerCell = table->cellAt(0, col); // get each cell of the header
-        QTextCharFormat charFormat;// = headerCell.format();
-        charFormat.setBackground(Qt::lightGray); // Set background color
-        charFormat.setFontWeight(QFont::Bold); // Make text bold
+        QTextCharFormat charFormat;
+        charFormat.setBackground(Qt::lightGray);
+        charFormat.setFontWeight(QFont::Bold);
         headerCell.setFormat(charFormat);
-        cursor->setBlockFormat(centerAlignment);
-        cursor->insertText(headers[col]);
-        cursor->movePosition(QTextCursor::NextCell);
+        QTextCursor cellCursor = headerCell.firstCursorPosition();
+        cellCursor.setBlockFormat(centerAlignment);
+        cellCursor.insertText(headers[col], charFormat);
     }
 
     // print table body
     for (auto row = 1; row < table->rows(); row++){
-        cursor->setBlockFormat(centerAlignment);
-        cursor->insertText(QString("%1").arg(row));
-        cursor->movePosition(QTextCursor::NextCell);
+        QTextTableCell numberCell = table->cellAt(row, 0);
+        QTextCursor numberCursor = numberCell.firstCursorPosition();
+        numberCursor.setBlockFormat(centerAlignment);
+        numberCursor.insertText(QString::number(row));
         for (auto col = 1; col < table->columns(); col++){
+            QTextTableCell cell = table->cellAt(row, col);
+            QTextCursor cellCursor = cell.firstCursorPosition();
             QString text = orderDetailModel.data(orderDetailModel.index(row-1, col-1), Qt::DisplayRole).toString();
-            if(col>1) cursor->setBlockFormat(rightAlignment);
-            cursor->insertText(text);
-            cursor->movePosition(QTextCursor::NextCell);
+            if(col>1) cellCursor.setBlockFormat(rightAlignment);
+            cellCursor.insertText(text);
         }
     }
+
+    // move out of table
+    cursor->setPosition(table->lastPosition());
+    cursor->movePosition(QTextCursor::NextBlock);
 
     // export document to printer
     document->print(printer);
