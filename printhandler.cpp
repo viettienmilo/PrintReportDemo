@@ -11,17 +11,19 @@ PrintHandler::PrintHandler(QObject *parent)
     printer->setPageOrientation(QPageLayout::Portrait);
     printer->setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout::Inch);
     // printer->setFullPage(true);
-    // printer->setOutputFileName("test.pdf");
-    // qDebug() << printer->resolution();
-
-
+    printer->setOutputFormat(QPrinter::NativeFormat);
 }
 
 void PrintHandler::print(int _orderId)
 {
     orderID = _orderId;
+
     QPrintDialog* dialog = new QPrintDialog(printer);
     if(dialog->exec() == QDialog::Accepted){
+        // if (printer.outputFormat() == QPrinter::NativeFormat &&
+        //         printer.printerName().contains("PDF", Qt::CaseInsensitive)) {
+        // printer->setOutputFileName(QString("%1.pdf").arg(orderID));
+        // }
         this->printRequest();
     }
 }

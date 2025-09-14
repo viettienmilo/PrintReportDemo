@@ -7,7 +7,7 @@ import PrintReportDemo
 Window {
     id: window
     minimumWidth: 1000
-    minimumHeight: 600
+    minimumHeight: 550
     visible: true
     title: qsTr("Print Report Demo")
 
@@ -46,30 +46,30 @@ Window {
     }
 
     ColumnLayout {
-        id: columnLayout3
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 25
-        anchors.topMargin: 60
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: 25
+            topMargin: 60
+        }
         spacing: 15
+
         ColumnLayout {
-            id: columnLayout
-            spacing: 0
+            spacing: -5
             Label {
-                id: label6
                 text: qsTr("Customer Info")
                 horizontalAlignment: Text.AlignLeft
-                font.underline: true
-                font.pointSize: 10
-                font.bold: true
+                font {
+                    underline: true
+                    pointSize: 10
+                    bold: true
+                }
                 Layout.preferredWidth: 100
             }
 
             RowLayout {
-                id: rowLayout1
                 spacing: 10
                 Label {
-                    id: label
                     text: qsTr("Customer ID:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -85,10 +85,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout2
                 spacing: 10
                 Label {
-                    id: label1
                     text: qsTr("Company Name:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -104,10 +102,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout3
                 spacing: 10
                 Label {
-                    id: label2
                     text: qsTr("Address:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -123,10 +119,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout4
                 spacing: 10
                 Label {
-                    id: label3
                     text: qsTr("City:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -142,10 +136,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout5
                 spacing: 10
                 Label {
-                    id: label4
                     text: qsTr("Postal Code:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -161,10 +153,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout6
                 spacing: 10
                 Label {
-                    id: label5
                     text: qsTr("Country:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -181,23 +171,21 @@ Window {
         }
 
         ColumnLayout {
-            id: columnLayout1
-            spacing: 0
+            spacing: -5
             Label {
-                id: label7
                 text: qsTr("Shipping Info")
                 horizontalAlignment: Text.AlignLeft
-                font.underline: true
-                font.pointSize: 10
-                font.bold: true
+                font {
+                    underline: true
+                    pointSize: 10
+                    bold: true
+                }
                 Layout.preferredWidth: 100
             }
 
             RowLayout {
-                id: rowLayout7
                 spacing: 10
                 Label {
-                    id: label8
                     text: qsTr("Ship Name:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -213,10 +201,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout8
                 spacing: 10
                 Label {
-                    id: label9
                     text: qsTr("Address:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -232,10 +218,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout10
                 spacing: 10
                 Label {
-                    id: label11
                     text: qsTr("City:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -251,10 +235,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout11
                 spacing: 10
                 Label {
-                    id: label12
                     text: qsTr("Postal Code:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -270,10 +252,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout12
                 spacing: 10
                 Label {
-                    id: label13
                     text: qsTr("Country:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -290,23 +270,21 @@ Window {
         }
 
         ColumnLayout {
-            id: columnLayout2
-            spacing: 0
+            spacing: -5
             Label {
-                id: label10
                 text: qsTr("Shipper Info")
                 horizontalAlignment: Text.AlignLeft
-                font.underline: true
-                font.pointSize: 10
-                font.bold: true
+                font {
+                    underline: true
+                    pointSize: 10
+                    bold: true
+                }
                 Layout.preferredWidth: 100
             }
 
             RowLayout {
-                id: rowLayout9
                 spacing: 10
                 Label {
-                    id: label14
                     text: qsTr("Ship Via:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -322,10 +300,8 @@ Window {
             }
 
             RowLayout {
-                id: rowLayout13
                 spacing: 10
                 Label {
-                    id: label15
                     text: qsTr("Phone:")
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -343,16 +319,14 @@ Window {
     }
 
     ColumnLayout {
-        id: columnLayout4
-        width: 260
-        height: 108
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 400
-        anchors.topMargin: 60
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: 400
+            topMargin: 60
+        }
         spacing: 0
         Label {
-            id: label16
             text: qsTr("Order No.")
             font.weight: Font.DemiBold
             font.bold: true
@@ -360,14 +334,9 @@ Window {
             font.pointSize: 10
         }
 
-
         RowLayout {
-            id: rowLayout16
-            x: 0
-            y: 23
             spacing: 0
             Rectangle {
-                id: rectangle
                 color: "#ffffff"
                 radius: 8
                 border.width: 1
@@ -386,13 +355,10 @@ Window {
             }
 
             ColumnLayout {
-                id: columnLayout5
                 spacing: 0
                 RowLayout {
-                    id: rowLayout14
                     spacing: 10
                     Label {
-                        id: label17
                         text: qsTr("Order Date:")
                         horizontalAlignment: Text.AlignRight
                         Layout.preferredWidth: 100
@@ -408,10 +374,8 @@ Window {
                 }
 
                 RowLayout {
-                    id: rowLayout15
                     spacing: 10
                     Label {
-                        id: label18
                         text: qsTr("Sale Person:")
                         horizontalAlignment: Text.AlignRight
                         Layout.preferredWidth: 100
@@ -428,12 +392,9 @@ Window {
             }
         }
 
-
         RowLayout {
-            id: rowLayout17
             spacing: 10
             Label {
-                id: label19
                 text: qsTr("Freight (g):")
                 horizontalAlignment: Text.AlignRight
                 Layout.preferredWidth: 60
@@ -449,17 +410,16 @@ Window {
         }
     }
 
-
     ColumnLayout {
-        id: columnLayout6
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.leftMargin: 5
-        anchors.rightMargin: 5
-        anchors.topMargin: 15
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            leftMargin: 5
+            rightMargin: 5
+            topMargin: 15
+        }
         RowLayout {
-            id: rowLayout
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             spacing: 2
             Label {
@@ -485,7 +445,6 @@ Window {
             RoundButton {
                 id: backButton
                 radius: 4
-                text: ""
                 Layout.preferredHeight: 26
                 Layout.preferredWidth: 26
                 padding: 3
@@ -504,7 +463,6 @@ Window {
             RoundButton {
                 id: nextButton
                 radius: 4
-                text: "+"
                 Layout.preferredHeight: 26
                 Layout.preferredWidth: 26
                 padding: 3
@@ -550,7 +508,6 @@ Window {
         }
 
         Rectangle {
-            id: rectangle1
             color: "#ffffff"
             border.color: "#979797"
             border.width: 1
@@ -560,225 +517,123 @@ Window {
         }
     }
 
-
-
-    Component.onCompleted: {
-        OrderModel.fetchData()
-        OrderDetailModel.fetchData(window.currentOrderId)
-        window.currentGrandTotal = OrderDetailModel.getGrandTotal(window.currentOrderId)
-        orderIdTextField.text = window.currentOrderId
-    }
-
     ColumnLayout {
-        id: columnLayout8
-        height: 344
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.leftMargin: 400
-        anchors.rightMargin: 30
-        anchors.topMargin: 190
-        ColumnLayout {
-            id: columnLayout7
-            spacing: 10
-            Label {
-                id: label20
-                text: qsTr("Order Details:")
-                font.weight: Font.DemiBold
-                font.underline: true
-                font.pointSize: 10
-                font.bold: true
+        anchors {
+            fill: parent
+            leftMargin: 400
+            rightMargin: 20
+            topMargin: 190
+        }
+        spacing: 10
+        Label {
+            text: qsTr("Order Details:")
+            font.weight: Font.DemiBold
+            font.underline: true
+            font.pointSize: 10
+            font.bold: true
+        }
+
+        ListView {
+            id: orderDetailView
+            clip: true
+            model: OrderDetailModel
+
+            component HeaderComponent : Rectangle {
+                property alias text: header.text
+                color: "lightgray"
+                border {
+                    color: "#808080"
+                    width: 1
+                }
+                Label {
+                    id: header
+                    anchors.fill: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.styleName: "Semibold"
+                }
+                height: 40
             }
 
-            ListView {
-                id: orderDetailView
-                clip: true
-                model: OrderDetailModel
-                header: RowLayout {
-                    width: orderDetailView.width
-                    spacing: 0
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: qsTr("No.")
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.styleName: "Semibold"
-                        }
-                        Layout.preferredWidth: 30
-                        Layout.preferredHeight: 40
-                    }
+            property var headers: ["No.", "Product Name", "Unit Price ($)", "Quantity", "Discount (%)", "Total Price ($)"]
+            property var headerWidths: [40, -1, 80, 80, 80, 80]
 
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: qsTr("Product Name")
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.styleName: "Semibold"
-                        }
-                        Layout.preferredHeight: 40
-                        Layout.fillWidth: true
-                    }
+            header: RowLayout {
+                width: orderDetailView.width
+                spacing: 0
 
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: qsTr("Unit Price ($)")
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.styleName: "Semibold"
-                        }
-                        Layout.preferredWidth: 80
-                        Layout.preferredHeight: 40
-                    }
-
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: qsTr("Quantity")
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.styleName: "Semibold"
-                        }
-                        Layout.preferredWidth: 80
-                        Layout.preferredHeight: 40
-                    }
-
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: qsTr("Discount (%)")
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.styleName: "Semibold"
-                        }
-                        Layout.preferredWidth: 80
-                        Layout.preferredHeight: 40
-                    }
-
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: qsTr("Total Price ($)")
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.styleName: "Semibold"
-                        }
-                        Layout.preferredWidth: 80
-                        Layout.preferredHeight: 40
+                Repeater {
+                    model: orderDetailView.headers
+                    HeaderComponent {
+                        text: modelData
+                        Component.onCompleted: if(index !== 1) Layout.preferredWidth = orderDetailView.headerWidths[index]
+                                               else Layout.fillWidth = true
                     }
                 }
-                delegate: RowLayout {
-                    width: orderDetailView.width
-                    spacing: 0
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: model.index + 1
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                        }
-                        Layout.preferredWidth: 30
-                        Layout.preferredHeight: 40
-                    }
-
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: model.ProductName
-                            anchors.fill: parent
-                            verticalAlignment: Text.AlignVCenter
-                            leftPadding: 5
-                        }
-                        Layout.preferredHeight: 40
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: model.UnitPrice
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignRight
-                            verticalAlignment: Text.AlignVCenter
-                            rightPadding: 5
-                        }
-                        Layout.preferredWidth: 80
-                        Layout.preferredHeight: 40
-                    }
-
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: model.Quantity
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignRight
-                            verticalAlignment: Text.AlignVCenter
-                            rightPadding: 5
-                        }
-                        Layout.preferredWidth: 80
-                        Layout.preferredHeight: 40
-                    }
-
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: model.Discount
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignRight
-                            verticalAlignment: Text.AlignVCenter
-                            rightPadding: 5
-                        }
-                        Layout.preferredWidth: 80
-                        Layout.preferredHeight: 40
-                    }
-
-                    Rectangle {
-                        border.color: "#808080"
-                        border.width: 1
-                        Label {
-                            text: model.TotalPrice
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignRight
-                            verticalAlignment: Text.AlignVCenter
-                            rightPadding: 5
-                        }
-                        Layout.preferredWidth: 80
-                        Layout.preferredHeight: 40
-                    }
-                }
-                Layout.topMargin: 1
-                Layout.rightMargin: 10
-                Layout.fillWidth: true
-                Layout.fillHeight: true
             }
+
+            component DelegateComponent : Rectangle {
+                property alias text: delegate.text
+                property alias textHAlignment: delegate.horizontalAlignment
+                border {
+                    color: "#808080"
+                    width: 1
+                }
+                Label {
+                    id: delegate
+                    anchors.fill: parent
+                    padding: 5
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                }
+                height: 40
+            }
+
+            delegate: RowLayout {
+                width: orderDetailView.width
+                spacing: 0
+
+                DelegateComponent {
+                    text: model.index + 1
+                    Layout.preferredWidth: 40
+                    textHAlignment: Qt.AlignHCenter
+                }
+                DelegateComponent {
+                    text: model.ProductName
+                    Layout.fillWidth: true
+                }
+                DelegateComponent {
+                    text: model.UnitPrice
+                    Layout.preferredWidth: 80
+                    textHAlignment: Qt.AlignRight
+                }
+                DelegateComponent {
+                    text: model.Quantity
+                    Layout.preferredWidth: 80
+                    textHAlignment: Qt.AlignRight
+                }
+                DelegateComponent {
+                    text: model.Discount
+                    Layout.preferredWidth: 80
+                    textHAlignment: Qt.AlignRight
+                }
+                DelegateComponent {
+                    text: model.TotalPrice
+                    Layout.preferredWidth: 80
+                    textHAlignment: Qt.AlignRight
+                }
+            }
+            Layout.topMargin: 1
+            Layout.rightMargin: 10
+            Layout.fillWidth: true
+            Layout.preferredHeight: orderDetailView.contentHeight
         }
 
         RowLayout {
-            id: rowLayout18
-            Layout.fillHeight: true
             spacing: 10
+            Layout.rightMargin: 10
+            Layout.alignment: Qt.AlignRight | Qt.AlignTop
             Label {
-                id: label21
                 text: qsTr("Grand Total:")
                 horizontalAlignment: Text.AlignRight
                 Layout.preferredWidth: 100
@@ -787,18 +642,25 @@ Window {
             Label {
                 id: grandTotalField
                 text: `$${Number(window.currentGrandTotal).toLocaleString(Qt.locale())}`
-                font.letterSpacing: 1
+                font {
+                    pointSize: 10
+                    bold: true
+                    letterSpacing: 1
+                }
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
                 leftPadding: 3
-                font.styleName: "Bold"
-                font.pointSize: 10
-                font.bold: true
                 Layout.preferredWidth: 80
                 Layout.preferredHeight: 30
             }
-            Layout.rightMargin: 10
-            Layout.alignment: Qt.AlignRight | Qt.AlignTop
         }
+        Item { Layout.fillHeight: true }
+    }
+
+    Component.onCompleted: {
+        OrderModel.fetchData()
+        OrderDetailModel.fetchData(window.currentOrderId)
+        window.currentGrandTotal = OrderDetailModel.getGrandTotal(window.currentOrderId)
+        orderIdTextField.text = window.currentOrderId
     }
 }
