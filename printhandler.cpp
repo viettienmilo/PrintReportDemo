@@ -47,26 +47,27 @@ void PrintHandler::printRequest(int _orderId)
     */
 
     orderModel.fetchData(_orderId);
-    // QString customerId = orderModel.data(orderModel.index(0, 1), Qt::DisplayRole).toString();
-    // QString companyName = orderModel.data(orderModel.index(0, 9), Qt::DisplayRole).toString();
-    // QString address = orderModel.data(orderModel.index(0, 10), Qt::DisplayRole).toString();
-    // QString city = orderModel.data(orderModel.index(0, 11), Qt::DisplayRole).toString();
-    // QString postalCode = orderModel.data(orderModel.index(0, 12), Qt::DisplayRole).toString();
-    // QString country = orderModel.data(orderModel.index(0, 13), Qt::DisplayRole).toString();
+    QString customerId = orderModel.data(orderModel.index(0, 1), Qt::DisplayRole).toString();
+    QString companyName = orderModel.data(orderModel.index(0, 9), Qt::DisplayRole).toString();
+    QString address = orderModel.data(orderModel.index(0, 10), Qt::DisplayRole).toString();
+    QString city = orderModel.data(orderModel.index(0, 11), Qt::DisplayRole).toString();
+    QString postalCode = orderModel.data(orderModel.index(0, 12), Qt::DisplayRole).toString();
+    QString country = orderModel.data(orderModel.index(0, 13), Qt::DisplayRole).toString();
 
-    // QString shipName = orderModel.data(orderModel.index(0, 4), Qt::DisplayRole).toString();
-    // QString shipAddress = orderModel.data(orderModel.index(0, 5), Qt::DisplayRole).toString();
-    // QString shipCity = orderModel.data(orderModel.index(0, 6), Qt::DisplayRole).toString();
-    // QString shipPostalCode = orderModel.data(orderModel.index(0, 7), Qt::DisplayRole).toString();
-    // QString shipCountry = orderModel.data(orderModel.index(0, 8), Qt::DisplayRole).toString();
+    QString shipName = orderModel.data(orderModel.index(0, 4), Qt::DisplayRole).toString();
+    QString shipAddress = orderModel.data(orderModel.index(0, 5), Qt::DisplayRole).toString();
+    QString shipCity = orderModel.data(orderModel.index(0, 6), Qt::DisplayRole).toString();
+    QString shipPostalCode = orderModel.data(orderModel.index(0, 7), Qt::DisplayRole).toString();
+    QString shipCountry = orderModel.data(orderModel.index(0, 8), Qt::DisplayRole).toString();
 
-    // QString shipVia = orderModel.data(orderModel.index(0, 15), Qt::DisplayRole).toString();
-    // QString shipperPhone = orderModel.data(orderModel.index(0, 16), Qt::DisplayRole).toString();
+    QString shipVia = orderModel.data(orderModel.index(0, 15), Qt::DisplayRole).toString();
+    QString shipperPhone = orderModel.data(orderModel.index(0, 16), Qt::DisplayRole).toString();
 
     QString orderDate = orderModel.data(orderModel.index(0, 2), Qt::DisplayRole).toDate().toString("dd-MM-yyyy");
-    // QString salePerson = orderModel.data(orderModel.index(0, 14), Qt::DisplayRole).toString();
+    QString salePerson = orderModel.data(orderModel.index(0, 14), Qt::DisplayRole).toString();
 
     QString freight = orderModel.data(orderModel.index(0, 3), Qt::DisplayRole).toString();
+
     cursor->setBlockFormat(rightAlignment);
     cursor->insertText("Order No: ", defaultTextFormat);
     cursor->insertText(QString("%1").arg(_orderId), boldFormat);
@@ -75,9 +76,64 @@ void PrintHandler::printRequest(int _orderId)
     cursor->insertText(orderDate, italicFormat);
     cursor->insertBlock();
     cursor->setBlockFormat(defaultBlockFormat);
+    cursor->insertText("Customer ID: ", defaultTextFormat);
+    cursor->insertText(customerId, italicFormat);
+    cursor->insertBlock();
+    cursor->insertText("Customer Name: ", defaultTextFormat);
+    cursor->insertText(companyName, boldFormat);
+    cursor->insertBlock();
+    cursor->insertText("Address: ", defaultTextFormat);
+    cursor->insertText(address, italicFormat);
+    cursor->insertBlock();
+    cursor->insertText("City: ", defaultTextFormat);
+    cursor->insertText(city, italicFormat);
+    cursor->insertText("\tPostal code: ", defaultTextFormat);
+    cursor->insertText(postalCode, italicFormat);
+    cursor->insertBlock();
+    cursor->insertText("Country: ", defaultTextFormat);
+    cursor->insertText(country, italicFormat);
+    cursor->insertBlock();
+    cursor->insertText("------------------------------------", defaultTextFormat);
+    cursor->insertBlock();
+    cursor->insertText("Shipping Name: ", defaultTextFormat);
+    cursor->insertText(shipName, boldFormat);
+    cursor->insertBlock();
+    cursor->insertText("Address: ", defaultTextFormat);
+    cursor->insertText(shipAddress, italicFormat);
+    cursor->insertBlock();
+    cursor->insertText("City: ", defaultTextFormat);
+    cursor->insertText(shipCity, italicFormat);
+    cursor->insertText("\tPostal code: ", defaultTextFormat);
+    cursor->insertText(shipPostalCode, italicFormat);
+    cursor->insertBlock();
+    cursor->insertText("Country: ", defaultTextFormat);
+    cursor->insertText(shipCountry, italicFormat);
+    cursor->insertBlock();
+    cursor->insertText("------------------------------------", defaultTextFormat);
+    cursor->insertBlock();
+    cursor->insertText("Ship Via: ", defaultTextFormat);
+    cursor->insertText(shipVia, boldFormat);
+    cursor->insertBlock();
+    cursor->insertText("Phone: ", defaultTextFormat);
+    cursor->insertText(shipperPhone, italicFormat);
+    cursor->insertBlock();
     cursor->insertText("Freight: ", defaultTextFormat);
     cursor->insertText(freight, italicFormat);
     cursor->insertText("(g)", italicFormat);
+    cursor->insertBlock();
+    cursor->insertText("------------------------------------", defaultTextFormat);
+    cursor->insertBlock();
+    cursor->insertText("Saled by: ", defaultTextFormat);
+    cursor->insertText(salePerson, boldFormat);
+    cursor->insertBlock();
+    QTextFrameFormat line;
+    line.setHeight(3);
+    line.setWidth(QTextLength(QTextLength::PercentageLength, 100));
+    line.setBackground(Qt::black);
+    cursor->insertFrame(line);
+    cursor->movePosition(QTextCursor::NextBlock); // Move cursor out of the frame
+    cursor->insertBlock();
+    cursor->insertText("Order details: ", boldFormat);
     cursor->insertBlock();
 
     // QTextFrameFormat frameFormat;
@@ -86,24 +142,7 @@ void PrintHandler::printRequest(int _orderId)
     // frameFormat.setBorder(1);
     // cursor->insertFrame(frameFormat);
 
-    // QTextBlockFormat centerFormat;
-    // centerFormat.setAlignment(Qt::AlignCenter);
-    // cursor->insertBlock(centerFormat);
-    // cursor->insertText("This text is centered horizontally and visually centered vertically.");
-    // cursor->insertBlock();
 
-    // cursor->movePosition(QTextCursor::NextBlock);
-    // cursor->insertBlock(); // new paragraph after the line
-    // cursor->insertText("Outside");
-
-    QTextFrameFormat line;
-    line.setHeight(3);
-    line.setWidth(QTextLength(QTextLength::PercentageLength, 100));
-    line.setBackground(Qt::black);
-    cursor->insertFrame(line);
-    // Move cursor out of the frame
-    cursor->movePosition(QTextCursor::NextBlock);
-    cursor->insertBlock();
 
     /*
      print out Order Detail table
@@ -167,6 +206,16 @@ void PrintHandler::printRequest(int _orderId)
     // move out of table
     cursor->setPosition(table->lastPosition());
     cursor->movePosition(QTextCursor::NextBlock);
+
+    // print GrandTotal
+    double grandTotal = orderDetailModel.getGrandTotal(_orderId);
+    cursor->insertBlock();
+    cursor->setBlockFormat(rightAlignment);
+    cursor->insertText("Grand Total:\t", defaultTextFormat);
+    cursor->insertText("$", boldFormat);
+    cursor->insertText(QString::number(grandTotal, 'f', 2), boldFormat);
+    cursor->insertBlock();
+
 
     // export document to printer
     document->print(printer);
