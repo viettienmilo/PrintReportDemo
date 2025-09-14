@@ -486,8 +486,8 @@ Window {
                 id: backButton
                 radius: 4
                 text: ""
-                Layout.preferredHeight: 30
-                Layout.preferredWidth: 30
+                Layout.preferredHeight: 26
+                Layout.preferredWidth: 26
                 padding: 3
                 highlighted: false
                 icon.color: "#000000"
@@ -505,8 +505,8 @@ Window {
                 id: nextButton
                 radius: 4
                 text: "+"
-                Layout.preferredHeight: 30
-                Layout.preferredWidth: 30
+                Layout.preferredHeight: 26
+                Layout.preferredWidth: 26
                 padding: 3
                 icon.source: Qt.resolvedUrl("icons/forward")
                 icon.color: "#000000"
@@ -523,7 +523,6 @@ Window {
             RoundButton {
                 id: printButton
                 radius: 4
-                text: "+"
                 padding: 3
                 icon.source: Qt.resolvedUrl("icons/printer")
                 icon.color: "#000000"
@@ -533,6 +532,20 @@ Window {
                 Layout.preferredWidth: 30
                 Layout.preferredHeight: 30
                 onClicked: PrintHandler.print(window.currentOrderId)
+            }
+
+            RoundButton {
+                id: printPreviewButton
+                radius: 4
+                padding: 3
+                icon.source: Qt.resolvedUrl("icons/preview")
+                icon.color: "#000000"
+                highlighted: false
+                flat: true
+                display: AbstractButton.IconOnly
+                Layout.preferredWidth: 30
+                Layout.preferredHeight: 30
+                onClicked: PrintHandler.printPreview(window.currentOrderId)
             }
         }
 

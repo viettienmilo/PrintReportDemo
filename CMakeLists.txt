@@ -23,6 +23,8 @@ qt_add_qml_module(appPrintReportDemo
         SOURCES orderdetailmodel.h orderdetailmodel.cpp
         RESOURCES icons/back.png icons/forward.png icons/printer.png
         SOURCES printhandler.h printhandler.cpp
+        RESOURCES
+        RESOURCES icons/preview.svg
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

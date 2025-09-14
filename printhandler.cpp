@@ -13,17 +13,29 @@ PrintHandler::PrintHandler(QObject *parent)
     // printer->setFullPage(true);
     // printer->setOutputFileName("test.pdf");
     // qDebug() << printer->resolution();
+
+
 }
 
 void PrintHandler::print(int _orderId)
 {
+    orderID = _orderId;
     QPrintDialog* dialog = new QPrintDialog(printer);
     if(dialog->exec() == QDialog::Accepted){
-        this->printRequest(_orderId);
+        this->printRequest();
     }
 }
 
-void PrintHandler::printRequest(int _orderId)
+void PrintHandler::printPreview(int _orderId)
+{
+    orderID = _orderId;
+    QPrintPreviewDialog* previewDialog = new QPrintPreviewDialog(printer, nullptr, Qt::Window);
+    connect(previewDialog, &QPrintPreviewDialog::paintRequested, this, &PrintHandler::printPreviewRequest);
+    previewDialog->setModal(true);
+    previewDialog->showMaximized();
+}
+
+void PrintHandler::createReportDocument()
 {
     document = new QTextDocument();
     QTextCursor* cursor = new QTextCursor(document);
@@ -46,7 +58,7 @@ void PrintHandler::printRequest(int _orderId)
      print out Order table
     */
 
-    orderModel.fetchData(_orderId);
+    orderModel.fetchData(orderID);
     QString customerId = orderModel.data(orderModel.index(0, 1), Qt::DisplayRole).toString();
     QString companyName = orderModel.data(orderModel.index(0, 9), Qt::DisplayRole).toString();
     QString address = orderModel.data(orderModel.index(0, 10), Qt::DisplayRole).toString();
@@ -68,12 +80,22 @@ void PrintHandler::printRequest(int _orderId)
 
     QString freight = orderModel.data(orderModel.index(0, 3), Qt::DisplayRole).toString();
 
+    // cursor->setBlockFormat(rightAlignment);
+    QTextFrameFormat rect;
+    rect.setMargin(0);
+    rect.setPadding(8);
+    rect.setBorder(1);
+    rect.setPosition(QTextFrameFormat::FloatRight);
+    rect.setWidth(QTextLength(QTextLength::FixedLength, 150));
+    cursor->insertFrame(rect);
     cursor->setBlockFormat(rightAlignment);
     cursor->insertText("Order No: ", defaultTextFormat);
-    cursor->insertText(QString("%1").arg(_orderId), boldFormat);
+    cursor->insertText(QString("%1").arg(orderID), boldFormat);
     cursor->insertBlock();
     cursor->insertText("Order Date: ", defaultTextFormat);
     cursor->insertText(orderDate, italicFormat);
+    cursor->movePosition(QTextCursor::NextBlock);
+
     cursor->insertBlock();
     cursor->setBlockFormat(defaultBlockFormat);
     cursor->insertText("Customer ID: ", defaultTextFormat);
@@ -87,7 +109,7 @@ void PrintHandler::printRequest(int _orderId)
     cursor->insertBlock();
     cursor->insertText("City: ", defaultTextFormat);
     cursor->insertText(city, italicFormat);
-    cursor->insertText("\tPostal code: ", defaultTextFormat);
+    cursor->insertText("  /  Postal code: ", defaultTextFormat);
     cursor->insertText(postalCode, italicFormat);
     cursor->insertBlock();
     cursor->insertText("Country: ", defaultTextFormat);
@@ -95,7 +117,7 @@ void PrintHandler::printRequest(int _orderId)
     cursor->insertBlock();
     cursor->insertText("------------------------------------", defaultTextFormat);
     cursor->insertBlock();
-    cursor->insertText("Shipping Name: ", defaultTextFormat);
+    cursor->insertText("Ship to: ", defaultTextFormat);
     cursor->insertText(shipName, boldFormat);
     cursor->insertBlock();
     cursor->insertText("Address: ", defaultTextFormat);
@@ -103,7 +125,7 @@ void PrintHandler::printRequest(int _orderId)
     cursor->insertBlock();
     cursor->insertText("City: ", defaultTextFormat);
     cursor->insertText(shipCity, italicFormat);
-    cursor->insertText("\tPostal code: ", defaultTextFormat);
+    cursor->insertText("  /  Postal code: ", defaultTextFormat);
     cursor->insertText(shipPostalCode, italicFormat);
     cursor->insertBlock();
     cursor->insertText("Country: ", defaultTextFormat);
@@ -126,28 +148,20 @@ void PrintHandler::printRequest(int _orderId)
     cursor->insertText("Saled by: ", defaultTextFormat);
     cursor->insertText(salePerson, boldFormat);
     cursor->insertBlock();
-    QTextFrameFormat line;
-    line.setHeight(3);
-    line.setWidth(QTextLength(QTextLength::PercentageLength, 100));
-    line.setBackground(Qt::black);
-    cursor->insertFrame(line);
+    QTextFrameFormat hline;
+    hline.setHeight(3);
+    hline.setWidth(QTextLength(QTextLength::PercentageLength, 100));
+    hline.setBackground(Qt::black);
+    cursor->insertFrame(hline);
     cursor->movePosition(QTextCursor::NextBlock); // Move cursor out of the frame
     cursor->insertBlock();
     cursor->insertText("Order details: ", boldFormat);
     cursor->insertBlock();
 
-    // QTextFrameFormat frameFormat;
-    // frameFormat.setMargin(0);
-    // frameFormat.setPadding(8);
-    // frameFormat.setBorder(1);
-    // cursor->insertFrame(frameFormat);
-
-
-
     /*
      print out Order Detail table
     */
-    orderDetailModel.fetchData(_orderId);
+    orderDetailModel.fetchData(orderID);
     // table header texts
     QList<QString> headers = {"No.", "Product Name", "Unit Price ($)", "Quantity", "Discount (%)", "Total Price ($)"};
     // table column widths
@@ -208,16 +222,24 @@ void PrintHandler::printRequest(int _orderId)
     cursor->movePosition(QTextCursor::NextBlock);
 
     // print GrandTotal
-    double grandTotal = orderDetailModel.getGrandTotal(_orderId);
+    double grandTotal = orderDetailModel.getGrandTotal(orderID);
     cursor->insertBlock();
     cursor->setBlockFormat(rightAlignment);
     cursor->insertText("Grand Total:\t", defaultTextFormat);
     cursor->insertText("$", boldFormat);
     cursor->insertText(QString::number(grandTotal, 'f', 2), boldFormat);
     cursor->insertBlock();
+}
 
+void PrintHandler::printRequest()
+{
+    createReportDocument();
+    document->print(printer);
+}
 
-    // export document to printer
+void PrintHandler::printPreviewRequest()
+{
+    createReportDocument();
     document->print(printer);
 }
 

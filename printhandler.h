@@ -6,6 +6,7 @@
 
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QPrintPreviewDialog>
 #include <QTextDocument>
 #include <QTextCursor>
 
@@ -22,9 +23,12 @@ public:
 
 public slots:
     void print(int _orderId);
+    void printPreview(int _orderId);
 
 private slots:
-    void printRequest(int _orderId);
+    void createReportDocument();
+    void printRequest();
+    void printPreviewRequest();
 
 signals:
 
@@ -33,6 +37,7 @@ private:
     QTextDocument* document;
     OrderModel orderModel;
     OrderDetailModel orderDetailModel;
+    int orderID;
 };
 
 #endif // PRINTHANDLER_H
