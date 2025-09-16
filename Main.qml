@@ -7,7 +7,7 @@ import PrintReportDemo
 Window {
     id: window
     minimumWidth: 1000
-    minimumHeight: 550
+    height: contentItem.childrenRect.height
     visible: true
     title: qsTr("Print Report Demo")
 
@@ -417,11 +417,17 @@ Window {
             top: parent.top
             leftMargin: 5
             rightMargin: 5
-            topMargin: 15
+            topMargin: 5
         }
         RowLayout {
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             spacing: 2
+            Label {
+                text: "Northwind Database - Order"
+                font.bold: true
+                font.pointSize: 14
+            }
+            Item { Layout.fillWidth: true }
+
             Label {
                 text: qsTr("Order ID:")
             }
@@ -439,14 +445,15 @@ Window {
                 color: parseInt(text)>=10248 ? parseInt(text)<=11077 ? "black" : "red" : "red"
                 leftPadding: 3
                 Layout.preferredWidth: 200
-                Layout.preferredHeight: 30
+                Layout.fillHeight: true
             }
 
             RoundButton {
                 id: backButton
                 radius: 4
                 Layout.preferredHeight: 26
-                Layout.preferredWidth: 26
+                Layout.fillHeight: true
+
                 padding: 3
                 highlighted: false
                 icon.color: "#000000"
@@ -464,7 +471,7 @@ Window {
                 id: nextButton
                 radius: 4
                 Layout.preferredHeight: 26
-                Layout.preferredWidth: 26
+                Layout.fillHeight: true
                 padding: 3
                 icon.source: Qt.resolvedUrl("icons/forward")
                 icon.color: "#000000"
@@ -488,7 +495,7 @@ Window {
                 flat: true
                 display: AbstractButton.IconOnly
                 Layout.preferredWidth: 30
-                Layout.preferredHeight: 30
+                Layout.fillHeight: true
                 onClicked: PrintHandler.print(window.currentOrderId)
             }
 
@@ -502,7 +509,7 @@ Window {
                 flat: true
                 display: AbstractButton.IconOnly
                 Layout.preferredWidth: 30
-                Layout.preferredHeight: 30
+                Layout.fillHeight: true
                 onClicked: PrintHandler.printPreview(window.currentOrderId)
             }
         }
